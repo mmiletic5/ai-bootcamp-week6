@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+import math
+from numbers import Real
 import re
 
 from .chunking import Chunk
@@ -29,13 +31,21 @@ def lexical_score(query: str, chunk_text: str) -> float:
 
 
 def retrieve_top_k(query: str, chunks: list[Chunk], k: int = 3, min_score: float = 0.01) -> list[RetrievalResult]:
+    if isinstance(k, bool) or not isinstance(k, int):
+        raise TypeError("k must be a positive integer")
     if k <= 0:
         raise ValueError("k must be > 0")
+    if isinstance(min_score, bool) or not isinstance(min_score, Real):
+        raise TypeError("min_score must be a finite non-negative number")
+    if not math.isfinite(min_score):
+        raise ValueError("min_score must be finite")
+    if min_score < 0:
+        raise ValueError("min_score must be >= 0")
 
     scored = [
         RetrievalResult(chunk=chunk, score=lexical_score(query, chunk.text))
         for chunk in chunks
     ]
-    filtered = [item for item in scored if item.score >= min_score]
-    filtered.sort(key=lambda item: item.score, reverse=True)
+    filtered = [item for item in scored if item.score > 0 and item.score >= min_score]
+    filtered.sort(key=lambda item: (-item.score, item.chunk.chunk_id))
     return filtered[:k]
