@@ -183,6 +183,10 @@ Mateja Miletic completed Outcomes 1 and 2. Isidora Prica completed Outcomes 3 an
 performed final technical integration and prepared shared Outcome 5 evidence with Mateja's
 permission. A final Mateja review is not claimed. The demo lead remains to be agreed.
 
+[Pull request #1](https://github.com/mmiletic5/ai-bootcamp-week6/pull/1) was merged into
+`develop` at commit `112c919`. The integrated full test suite was independently verified on
+October 12, 2026: `97 passed in 0.26s`.
+
 ## Known limitations
 
 - Lexical overlap is not semantic understanding, entailment, or external fact verification.
@@ -195,7 +199,8 @@ permission. A final Mateja review is not claimed. The demo lead remains to be ag
 
 ## Submission readiness
 
-Before packaging, rerun the full tests, focused RAG tests, all three CLI commands, the comparison
-script, and `git diff --check`. Review `evidence.md` and the homework checklist. The technical
-materials are locally review-ready, but the demo lead and any external submission/publishing
-decision remain deliberately unresolved.
+GitHub integration is complete: [pull request #1](https://github.com/mmiletic5/ai-bootcamp-week6/pull/1)
+was merged into `develop` at commit `112c919`, and the integrated full test suite was independently
+verified on October 12, 2026 with `97 passed in 0.26s`. The repository documentation and
+reproducible evidence are ready for professor review. The repository link has not yet been
+submitted to the professor, and the demo lead remains unassigned.
