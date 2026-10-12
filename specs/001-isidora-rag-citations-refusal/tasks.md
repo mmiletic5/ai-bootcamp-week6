@@ -49,7 +49,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 **Independent test**: the approved supported query cites only qualifying `doc-1-chunk-0`.
 
-- [ ] T003 [US1] Write and run RED Outcome 3 tests in `tests/test_rag.py`.
+- [x] T003 [US1] Write and run RED Outcome 3 tests in `tests/test_rag.py`.
   - **Requirements/acceptance**: R3.1/AC3.1, R3.2/AC3.2, R3.3/AC3.3, R3.4/AC3.4.
   - **Dependencies**: T002.
   - **Test first**: exact excerpt, inline citation, exact citation list, unrelated-result exclusion,
@@ -58,6 +58,9 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **RED command**: `.\.venv\Scripts\python.exe -m pytest tests\test_rag.py -q`.
   - **Expected RED**: starter behavior cites a non-qualifying result and fails exact formatting or
     deduplication assertions; pre-existing assertions continue to run.
+  - **Observed RED (2026-10-12)**: `4 failed, 4 passed in 0.11s`; failures covered exact
+    extractive formatting, qualifying-only citations, weak-result exclusion, and duplicate-ID
+    suppression. Determinism, `top_k=1`, public API shape, and the existing refusal test passed.
   - **Evidence**: capture failing test names and reasons without recording them as final results.
   - **Complete when**: failures demonstrate approved gaps rather than test mistakes.
   - **Suggested future commit**: `test: specify grounded answer and citation behavior`.
