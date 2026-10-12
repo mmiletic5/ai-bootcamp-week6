@@ -51,7 +51,7 @@ Use this checklist when preparing your submission.
 
 ## I. Submission bundle (recommended)
 
-- [x] `evidence.md` with Outcome 1-5 sections.
+- [x] `docs/evidence.md` with Outcome 1-5 sections.
 - [x] CLI commands used for both example queries.
 - [x] Historical `83`/`29` and current `97`/`43` test snapshots are labeled separately.
 - [x] Pull request #1 was merged into `develop` at commit `112c919`.

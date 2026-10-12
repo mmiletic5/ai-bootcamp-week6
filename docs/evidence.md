@@ -206,6 +206,6 @@ The `training-rag` supported command completed its answer with citations
 - Isidora Prica: final technical integration and shared Outcome 5 evidence preparation, completed independently with Mateja's permission.
 - Isidora Prica: Feature 002 verified adjacent-source continuation, tests, and updated Outcome 3/5 evidence.
 
-No claim is made that Mateja reviewed or approved this final integrated document. The demo lead
-has not been agreed or recorded. Pull request #1 was merged into `develop` at commit `112c919`.
-The GitHub repository link has not yet been submitted to the professor.
+Mateja reviewed and approved the integrated changes. The demo lead has not been agreed or
+recorded. Pull request #1 was merged into `develop` at commit `112c919`. The GitHub repository
+link has not yet been submitted to the professor.

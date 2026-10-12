@@ -94,7 +94,7 @@ Implementation may change only:
 - `docs/rag-evidence.md`
 - `docs/homework-checklist.md`
 - `README.md`
-- `evidence.md`
+- `docs/evidence.md`
 
 This feature's five planning artifacts are added under `specs/002-complete-grounded-answers/`.
 No other file is planned to change.

@@ -114,7 +114,7 @@ git diff --check
   actual tests, commands, risks, and limitations.
 - [x] Q005.2 Update only applicable extension/readiness entries in `docs/homework-checklist.md`.
 - [x] Q005.3 Update README architecture, examples, verified counts, and limitation text.
-- [x] Q005.4 Update only Outcomes 3 and 5 plus verification in root `evidence.md`.
+- [x] Q005.4 Update only Outcomes 3 and 5 plus verification in `docs/evidence.md`.
 - [x] Q005.5 Preserve historical `83 passed`, `29 passed`, earlier RED/GREEN results, retrieval
   rankings, and Mateja's Outcome 1/2 evidence as explicitly historical facts.
 - [x] Q005.6 Confirm every documented ID, output, and count was actually observed in Q004.

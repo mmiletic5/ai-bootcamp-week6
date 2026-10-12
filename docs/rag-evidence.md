@@ -7,9 +7,7 @@ refusal (Outcome 4), and the approved Feature 002 complete-grounded-answer quali
 
 This evidence covers the RAG answer layer, its automated tests, and CLI integration. Mateja
 Miletic owns Outcomes 1 and 2: chunking, retrieval, their tests, the comparison script, and
-`docs/chunking-retrieval-evidence.md`. Those files were not changed. The untracked
-`docs/mateja_handoff.md` remained unchanged with SHA-256
-`230543DC37628433F66F617B7CF4739DB8795C0E6F39C7AFC65BF678866508CB`.
+`docs/chunking-retrieval-evidence.md`. Those files were not changed.
 
 Feature 002 is a post-homework quality improvement. Feature 001 and its T001-T010 history remain
 accurate: the original implementation returned exact qualifying chunk text and valid citations,
@@ -77,6 +75,18 @@ Run from the repository root in Windows PowerShell:
 .\.venv\Scripts\python.exe -m src.cli --question "Who won the world cup in 1958?"
 .\.venv\Scripts\python.exe -m src.cli --corpus-profile training-rag --question "Why are citations important in RAG?"
 .\.venv\Scripts\python.exe .\scripts\compare_chunking_retrieval.py
+git diff --check
+```
+
+Run from the repository root on Linux/macOS after activating `.venv`:
+
+```bash
+python -m pytest -q
+python -m pytest tests/test_rag.py -q
+python -m src.cli --question "What is retrieval augmented generation?"
+python -m src.cli --question "Who won the world cup in 1958?"
+python -m src.cli --corpus-profile training-rag --question "Why are citations important in RAG?"
+python scripts/compare_chunking_retrieval.py
 git diff --check
 ```
 

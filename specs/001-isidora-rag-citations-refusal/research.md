@@ -101,4 +101,4 @@ the unsupported demonstration.
 ## Unresolved Shared Decisions
 
 - The final demo lead must be agreed by both contributors.
-- Outcome 5, root `evidence.md`, README changes, merge strategy, and submission remain shared work.
+- Outcome 5, `docs/evidence.md`, README changes, merge strategy, and submission remain shared work.

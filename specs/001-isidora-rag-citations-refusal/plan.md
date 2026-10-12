@@ -156,7 +156,7 @@ real results, limitations, and handoff notes. Only verified Outcome 3/4 checklis
 
 Shared Outcome 5 work was separately authorized for T010 on 2026-10-12. Isidora may complete
 the final technical integration independently with Mateja's permission; his additional review
-is optional. T010 includes integrated regression, root `evidence.md`, README, contributor
+is optional. T010 includes integrated regression, `docs/evidence.md`, README, contributor
 attribution, demo-lead status, and the final checklist on the existing feature branch. It does
 not authorize a branch switch, merge, rebase, cherry-pick, push, pull request, or external submission.
 

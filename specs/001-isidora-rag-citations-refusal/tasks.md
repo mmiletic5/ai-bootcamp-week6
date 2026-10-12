@@ -196,7 +196,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 ## Phase 7: Shared Integration and Submission Preparation
 
-- [x] T010 Execute shared Outcome 5 integration in `evidence.md`, `README.md`, and
+- [x] T010 Execute shared Outcome 5 integration in `docs/evidence.md`, `README.md`, and
   remaining `docs/homework-checklist.md` items.
   - **Requirements/acceptance**: R5.1 plus all five instructor outcomes.
   - **Dependencies**: T009 and explicit T010 authorization. Mateja review is optional and is not
@@ -210,7 +210,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
     baseline; only the preserved untracked handoff was present and its SHA-256 matched. The final
     suite reported `83 passed in 0.12s`; focused RAG tests reported `29 passed in 0.06s`; both
     CLI cases and the chunking/retrieval comparison reproduced documented results. Root
-    `evidence.md`, the completed-project README, and verified checklist states were prepared.
+    `docs/evidence.md`, the completed-project README, and verified checklist states were prepared.
     Mateja-owned implementation/evidence remained unchanged. No demo-lead agreement was found,
     so that decision and external submission remain explicitly open.
   - **Complete when**: Outcome 5 is reproduced and technical submission materials are review-ready;
