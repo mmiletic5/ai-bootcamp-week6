@@ -154,9 +154,11 @@ specs/001-isidora-rag-citations-refusal/
 output, retrieved/cited IDs, Outcome 4 tests and unsupported output, exact PowerShell commands,
 real results, limitations, and handoff notes. Only verified Outcome 3/4 checklist items may change.
 
-Shared Outcome 5 work is planned in T010 but requires separate team authorization. It includes
-integrated regression, root `evidence.md`, README, contributor attribution, demo lead, final
-checklist, and `develop` integration. No push, merge, rebase, or PR is implied.
+Shared Outcome 5 work was separately authorized for T010 on 2026-10-12. Isidora may complete
+the final technical integration independently with Mateja's permission; his additional review
+is optional. T010 includes integrated regression, root `evidence.md`, README, contributor
+attribution, demo-lead status, and the final checklist on the existing feature branch. It does
+not authorize a branch switch, merge, rebase, cherry-pick, push, pull request, or external submission.
 
 ## Risks and Limitations
 

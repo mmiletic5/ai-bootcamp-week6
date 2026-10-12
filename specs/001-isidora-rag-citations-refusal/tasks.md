@@ -2,8 +2,10 @@
 
 **Input**: `spec.md`, `plan.md`, and `research.md` in this feature directory
 **Workflow**: RED -> GREEN -> REFACTOR -> VERIFY -> EVIDENCE -> COMMIT
-**Authorization**: T001-T006 are complete. Implementation Session 3 authorizes T007-T009
-only and must stop before T010. T010 remains pending a separate new session.
+**Authorization**: T001-T009 are complete. On 2026-10-12 Isidora explicitly authorized T010
+and confirmed Mateja permitted her to complete the final technical integration independently;
+his additional review is optional. This authorization excludes branch changes, merges, rebases,
+cherry-picks, pushes, pull requests, and external submission.
 
 ## Phase 1: Specification Setup and Mandatory Review Gate
 
@@ -192,30 +194,39 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **Complete when**: tests, traceability, evidence, ownership, and diff hygiene all pass.
   - **Commit boundary**: only explicitly authorized corrections or logical phase commits.
 
-## Phase 7: Shared Integration and Submission (Planned Only)
+## Phase 7: Shared Integration and Submission Preparation
 
-- [ ] T010 Plan and later execute shared Outcome 5 integration in `evidence.md`, `README.md`, and
+- [x] T010 Execute shared Outcome 5 integration in `evidence.md`, `README.md`, and
   remaining `docs/homework-checklist.md` items.
   - **Requirements/acceptance**: R5.1 plus all five instructor outcomes.
-  - **Dependencies**: T009, Mateja coordination, and separate authorization.
-  - **Actions**: integrate through updated `develop`; verify all outcomes; reproduce both CLI cases;
+  - **Dependencies**: T009 and explicit T010 authorization. Mateja review is optional and is not
+    a blocking dependency.
+  - **Actions**: verify all completed work already present on the current feature branch; verify all outcomes; reproduce both CLI cases;
     create the exact five-section root evidence; add Windows setup/testing/evidence guidance,
-    contributor attribution, and agreed demo lead.
+    contributor attribution, and record demo-lead status without inventing an assignment.
   - **Verification**: full integrated suite, CLI reproduction, checklist and diff review.
   - **Evidence**: root evidence only after genuine integrated verification.
-  - **Complete when**: Outcome 5 is reproduced and submission materials are review-ready.
-  - **Restrictions**: no merge, rebase, push, PR, or completion claim without authorization.
+  - **Observed verification (2026-10-12)**: pre-T010 branch and HEAD matched the authorized
+    baseline; only the preserved untracked handoff was present and its SHA-256 matched. The final
+    suite reported `83 passed in 0.12s`; focused RAG tests reported `29 passed in 0.06s`; both
+    CLI cases and the chunking/retrieval comparison reproduced documented results. Root
+    `evidence.md`, the completed-project README, and verified checklist states were prepared.
+    Mateja-owned implementation/evidence remained unchanged. No demo-lead agreement was found,
+    so that decision and external submission remain explicitly open.
+  - **Complete when**: Outcome 5 is reproduced and technical submission materials are review-ready;
+    unresolved non-technical decisions are explicitly recorded.
+  - **Restrictions**: no branch switch, merge, rebase, cherry-pick, push, PR, or external submission.
   - **Suggested future commit**: `docs: finalize Week 6 RAG submission evidence`.
 
 ## Dependencies and Execution Order
 
 `T001 -> APPROVAL -> T002 -> T003 -> T004 -> T005 -> T006 -> T007 -> T008 -> T009 -> T010`
 
-- T007-T009 are complete; Implementation Session 3 stops before pending T010.
+- T007-T010 are complete; T010 was separately authorized and executed on the existing feature branch.
 - T003/T004 complete User Story 1 independently.
 - T005/T006 complete User Story 2 after the shared qualification contract exists.
 - T007/T008 complete User Story 3 after answer/refusal behavior is stable.
-- T009 is the individual-scope release gate; T010 is separately authorized shared work.
+- T009 is the individual-scope release gate; T010 is separately authorized shared technical work.
 - No tasks are marked parallel because TDD evidence and shared-file sequencing require strict order.
 
 ## Implementation Strategy

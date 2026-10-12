@@ -5,8 +5,8 @@ Use this checklist when preparing your submission.
 ## A. Baseline setup
 
 - [x] Project installs and tests run locally.
-- [ ] You can run the CLI with a custom question.
-- [ ] You understand where chunking, retrieval, and answer behavior are implemented.
+- [x] You can run the CLI with a custom question.
+- [x] You understand where chunking, retrieval, and answer behavior are implemented.
 
 ## B. Outcome 1: Explain chunking effect on retrieval quality
 
@@ -34,13 +34,13 @@ Use this checklist when preparing your submission.
 
 ## F. Outcome 5: Show supported and unsupported evidence
 
-- [ ] You provide one supported query with: question, retrieved chunks, answer, citations.
-- [ ] You provide one unsupported query with: question, retrieved chunks (or empty result), refusal output.
-- [ ] Evidence for both examples is reproducible from CLI commands or tests.
+- [x] You provide one supported query with: question, retrieved chunks, answer, citations.
+- [x] You provide one unsupported query with: question, retrieved chunks (or empty result), refusal output.
+- [x] Evidence for both examples is reproducible from CLI commands or tests.
 
 ## G. Pair accountability
 
-- [ ] Pair report includes contribution of both members.
+- [x] Pair report includes contribution of both members.
 - [ ] The designated demo lead for this week is recorded.
 
 ## H. Suggested extension (optional)
@@ -50,7 +50,12 @@ Use this checklist when preparing your submission.
 
 ## I. Submission bundle (recommended)
 
-- [ ] `evidence.md` with Outcome 1-5 sections.
-- [ ] CLI commands used for both example queries.
-- [ ] Test output snapshot.
+- [x] `evidence.md` with Outcome 1-5 sections.
+- [x] CLI commands used for both example queries.
+- [x] Test output snapshot.
+
+## J. Remaining decisions
+
+- [ ] Agree and record the designated demo lead.
+- [ ] Review the final local bundle and decide separately whether to publish, merge, or submit it externally.
 
