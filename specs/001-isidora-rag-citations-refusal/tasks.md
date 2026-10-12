@@ -2,8 +2,8 @@
 
 **Input**: `spec.md`, `plan.md`, and `research.md` in this feature directory
 **Workflow**: RED -> GREEN -> REFACTOR -> VERIFY -> EVIDENCE -> COMMIT
-**Authorization**: T001 and T002 are complete. T003-T004 are authorized for Implementation Session 1;
-T005 and later tasks remain unauthorized in this session.
+**Authorization**: T001-T004 are complete. T005-T006 are authorized for Implementation Session 2;
+T007 and later tasks remain unauthorized in this session.
 
 ## Phase 1: Specification Setup and Mandatory Review Gate
 
@@ -88,7 +88,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 **Independent test**: the approved World Cup query refuses with no citations.
 
-- [ ] T005 [US2] Write and run RED Outcome 4 tests in `tests/test_rag.py`.
+- [x] T005 [US2] Write and run Outcome 4 tests in `tests/test_rag.py`.
   - **Requirements/acceptance**: R4.1/AC4.1 through R4.5/AC4.5.
   - **Dependencies**: T004.
   - **Test first**: empty/whitespace question, empty chunks, no match, stopword false positive,
@@ -96,6 +96,12 @@ or Git history until Isidora explicitly approves the actual artifacts.
     refusal safety, and invalid `top_k` propagation.
   - **RED command**: `.\.venv\Scripts\python.exe -m pytest tests\test_rag.py -q`.
   - **Expected RED**: weak positive matches answer instead of refusing before the evidence gate exists.
+  - **Observed result (2026-10-12)**: `24 passed in 0.09s`. All 16 added test cases passed
+    immediately because T004 had already introduced the shared evidence-qualification logic.
+    The new coverage verifies empty and whitespace questions, empty chunks, no results,
+    stopword/common-word false positives, one distinct match, both sides of the 50% boundary,
+    duplicate query terms, exact safe refusal output, invalid `top_k`, and supported regression.
+    No RED failure was manufactured and no application change was needed.
   - **Evidence**: capture relevant failures only.
   - **Complete when**: boundary and false-positive failures directly map to R4 requirements.
   - **Suggested future commit**: `test: specify unsupported question refusal`.
@@ -174,7 +180,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 `T001 -> APPROVAL -> T002 -> T003 -> T004 -> T005 -> T006 -> T007 -> T008 -> T009 -> T010`
 
-- T001 is the only currently authorized task.
+- T005-T006 are the only currently authorized tasks in Implementation Session 2.
 - T003/T004 complete User Story 1 independently.
 - T005/T006 complete User Story 2 after the shared qualification contract exists.
 - T007/T008 complete User Story 3 after answer/refusal behavior is stable.

@@ -1,10 +1,12 @@
 from dataclasses import fields
 from inspect import signature
 
+import pytest
+
 from src.chunking import Chunk
 from src.chunking import build_chunks
 from src.corpus import load_default_corpus
-from src.rag import RagAnswer, build_grounded_answer
+from src.rag import REFUSAL_MESSAGE, RagAnswer, build_grounded_answer
 from src.retrieval import retrieve_top_k
 
 
@@ -89,3 +91,122 @@ def test_build_grounded_answer_refuses_unsupported_query() -> None:
     result = build_grounded_answer("Who was emperor of Mars?", chunks, top_k=2)
     assert result.refused is True
     assert result.citations == []
+
+
+@pytest.mark.parametrize("question", ["", " \t\r\n "])
+def test_empty_or_whitespace_only_question_returns_exact_refusal(question: str) -> None:
+    result = build_grounded_answer(question, [make_chunk("evidence", "alpha beta")])
+
+    assert result == RagAnswer(REFUSAL_MESSAGE, [], True)
+
+
+def test_empty_chunk_collection_returns_exact_refusal() -> None:
+    result = build_grounded_answer("alpha beta", [])
+
+    assert result == RagAnswer(REFUSAL_MESSAGE, [], True)
+
+
+def test_no_retrieved_results_returns_exact_refusal() -> None:
+    chunks = [make_chunk("unrelated", "gamma delta")]
+
+    assert retrieve_top_k("alpha beta", chunks, k=2) == []
+    assert build_grounded_answer("alpha beta", chunks) == RagAnswer(
+        REFUSAL_MESSAGE, [], True
+    )
+
+
+def test_question_containing_only_stopwords_is_refused_despite_positive_score() -> None:
+    chunks = [make_chunk("stopwords", "the system is in the corpus")]
+
+    assert retrieve_top_k("what is in the system", chunks, k=2)[0].score > 0
+    assert build_grounded_answer("what is in the system", chunks) == RagAnswer(
+        REFUSAL_MESSAGE, [], True
+    )
+
+
+def test_irrelevant_common_word_overlap_does_not_qualify_as_evidence() -> None:
+    question = "Who won the world cup in 1958?"
+    chunks = [make_chunk("common-words", "Who is in the local archive?")]
+
+    assert retrieve_top_k(question, chunks, k=2)[0].score > 0
+    assert build_grounded_answer(question, chunks) == RagAnswer(
+        REFUSAL_MESSAGE, [], True
+    )
+
+
+def test_only_one_distinct_meaningful_match_is_refused() -> None:
+    chunks = [make_chunk("one-match", "alpha alpha unrelated")]
+
+    assert build_grounded_answer("alpha beta", chunks) == RagAnswer(
+        REFUSAL_MESSAGE, [], True
+    )
+
+
+def test_two_meaningful_matches_below_half_query_coverage_are_refused() -> None:
+    chunks = [make_chunk("below-boundary", "alpha beta unrelated")]
+
+    assert build_grounded_answer("alpha beta gamma delta epsilon", chunks) == RagAnswer(
+        REFUSAL_MESSAGE, [], True
+    )
+
+
+def test_two_meaningful_matches_at_half_query_coverage_are_supported() -> None:
+    chunk = make_chunk("at-boundary", "alpha beta supporting text")
+
+    result = build_grounded_answer("alpha beta gamma delta", [chunk])
+
+    assert result == RagAnswer(
+        "Grounded answer:\n- alpha beta supporting text [at-boundary]",
+        ["at-boundary"],
+        False,
+    )
+
+
+def test_duplicate_query_terms_count_once_for_matches_and_coverage() -> None:
+    chunk = make_chunk("distinct-terms", "alpha beta supporting text")
+
+    result = build_grounded_answer("alpha alpha beta beta gamma delta", [chunk])
+
+    assert result.refused is False
+    assert result.citations == ["distinct-terms"]
+
+
+def test_refusal_contains_no_retrieved_excerpt_or_citation() -> None:
+    marker = "UNSUPPORTED_EXCERPT_MARKER"
+    chunks = [make_chunk("weak-evidence", f"alpha {marker}")]
+
+    result = build_grounded_answer("alpha beta", chunks)
+
+    assert result.answer == REFUSAL_MESSAGE
+    assert marker not in result.answer
+    assert "weak-evidence" not in result.answer
+    assert result.citations == []
+    assert result.refused is True
+
+
+@pytest.mark.parametrize(
+    ("top_k", "error_type", "message"),
+    [
+        (True, TypeError, "k must be a positive integer"),
+        (1.5, TypeError, "k must be a positive integer"),
+        (0, ValueError, "k must be > 0"),
+        (-1, ValueError, "k must be > 0"),
+    ],
+)
+def test_invalid_top_k_preserves_retrieval_validation_errors(
+    top_k: object, error_type: type[Exception], message: str
+) -> None:
+    with pytest.raises(error_type, match=message):
+        build_grounded_answer("", [], top_k=top_k)  # type: ignore[arg-type]
+
+
+def test_supported_question_remains_grounded_after_refusal_checks() -> None:
+    chunk = make_chunk("supported", "retrieval augmented generation uses corpus evidence")
+
+    result = build_grounded_answer(SUPPORTED_QUESTION, [chunk])
+
+    assert result == RagAnswer(
+        "Grounded answer:\n- retrieval augmented generation uses corpus evidence [supported]",
+        ["supported"],
+        False,
+    )
