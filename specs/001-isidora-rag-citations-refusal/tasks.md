@@ -154,7 +154,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **Complete when**: Answer, Refused, and Citations are deterministic and clearly separated.
   - **Suggested future commit**: `test: verify RAG CLI output`, plus a feature commit only if needed.
 
-- [ ] T008 [US3] Verify and document individual evidence in `docs/rag-evidence.md` and verified
+- [x] T008 [US3] Verify and document individual evidence in `docs/rag-evidence.md` and verified
   Outcome 3/4 items only in `docs/homework-checklist.md`.
   - **Requirements/acceptance**: D1/AC-D1 and verified R3/R4 behavior.
   - **Dependencies**: T007.
@@ -163,6 +163,12 @@ or Git history until Isidora explicitly approves the actual artifacts.
     limitations, and integration handoff.
   - **EVIDENCE**: use actual output only; distinguish lexical grounding from semantic correctness.
   - **Verification**: reproduce all documented commands and compare documentation to output.
+  - **Observed verification (2026-10-12)**: `docs/rag-evidence.md` records the verified TDD
+    history, exact reproduction commands, retrieved IDs/text/scores, RAG and CLI results,
+    edge cases, test totals, deterministic lexical rule, limitations, ownership, and T010
+    handoff. The focused edge selection reported `16 passed, 13 deselected in 0.05s`; the full
+    RAG file reported `29 passed in 0.06s`; and the full suite reported `83 passed in 0.12s`.
+    Exactly the six verified Outcome 3/4 checklist items were marked complete.
   - **Complete when**: every evidence statement is traceable and only verified checklist items change.
   - **Suggested future commit**: `docs: add RAG evidence and update homework checklist`.
 

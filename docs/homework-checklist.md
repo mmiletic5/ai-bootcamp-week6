@@ -22,15 +22,15 @@ Use this checklist when preparing your submission.
 
 ## D. Outcome 3: Return answers with explicit citations
 
-- [ ] Supported answer includes explicit citations to chunk IDs.
-- [ ] Citation IDs in answer correspond to retrieved chunks shown in evidence.
-- [ ] Answer format clearly separates answer body and citations/references.
+- [x] Supported answer includes explicit citations to chunk IDs.
+- [x] Citation IDs in answer correspond to retrieved chunks shown in evidence.
+- [x] Answer format clearly separates answer body and citations/references.
 
 ## E. Outcome 4: Refuse unsupported questions
 
-- [ ] For an unsupported question, the system refuses instead of generating an unsupported claim.
-- [ ] Refusal message is clear and consistent with grounded RAG behavior.
-- [ ] You explain briefly why retrieved evidence was insufficient.
+- [x] For an unsupported question, the system refuses instead of generating an unsupported claim.
+- [x] Refusal message is clear and consistent with grounded RAG behavior.
+- [x] You explain briefly why retrieved evidence was insufficient.
 
 ## F. Outcome 5: Show supported and unsupported evidence
 
