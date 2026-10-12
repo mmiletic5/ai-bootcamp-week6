@@ -23,8 +23,9 @@ Use this checklist when preparing your submission.
 ## D. Outcome 3: Return answers with explicit citations
 
 - [x] Supported answer includes explicit citations to chunk IDs.
-- [x] Citation IDs in answer correspond to retrieved chunks shown in evidence.
+- [x] Citation IDs identify the qualifying lexical seed and every verified adjacent source chunk.
 - [x] Answer format clearly separates answer body and citations/references.
+- [x] The default supported answer completes the source sentence without duplicated overlap text.
 
 ## E. Outcome 4: Refuse unsupported questions
 
@@ -45,14 +46,14 @@ Use this checklist when preparing your submission.
 
 ## H. Suggested extension (optional)
 
-- [ ] Improve lexical scoring or citation formatting.
-- [ ] Add at least 3 tests for your extension.
+- [x] Improve grounded-answer completeness and multi-source citation formatting.
+- [x] Add at least 3 tests for the extension, including unsafe-continuation regressions.
 
 ## I. Submission bundle (recommended)
 
 - [x] `evidence.md` with Outcome 1-5 sections.
 - [x] CLI commands used for both example queries.
-- [x] Test output snapshot.
+- [x] Historical `83`/`29` and current `97`/`43` test snapshots are labeled separately.
 
 ## J. Remaining decisions
 

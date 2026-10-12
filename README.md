@@ -24,7 +24,8 @@ The deterministic pipeline is:
 
 ```text
 Corpus -> word-aware chunking -> lexical top-k retrieval
-       -> evidence qualification -> extractive answer with citations OR refusal -> CLI
+       -> evidence qualification -> verified source continuation
+       -> extractive answer with citations OR refusal -> CLI
 ```
 
 - `src/corpus.py` provides the `default` and `training-rag` in-memory corpus profiles.
@@ -32,8 +33,10 @@ Corpus -> word-aware chunking -> lexical top-k retrieval
 - `src/retrieval.py` scores lexical overlap, excludes zero-score results, and sorts by descending
   score with chunk ID as the deterministic tie-breaker.
 - `src/rag.py` requires at least two distinct meaningful query-term matches and at least 50%
-  meaningful-term coverage per chunk. It copies qualifying chunk text exactly and cites its ID;
-  otherwise it returns the fixed refusal.
+  meaningful-term coverage per lexical seed. For an unfinished seed, it may append immediate
+  same-document chunks from the original source order when each boundary has a non-empty exact
+  word overlap. It removes the longest overlap, stops at the first completed sentence, and cites
+  every contributing chunk separately; otherwise it returns the fixed refusal.
 - `src/cli.py` exposes the pipeline without external services.
 
 This project does **not** use an external LLM, embeddings, a vector database, semantic retrieval,
@@ -102,8 +105,10 @@ Linux/macOS:
 ./scripts/run_tests.sh
 ```
 
-The final verified snapshot is `83 passed` for the complete suite and `29 passed` for
-`tests/test_rag.py`.
+The historical pre-Feature-002 snapshot remains `83 passed` for the complete suite and `29 passed`
+for `tests/test_rag.py`. Feature 002 recorded a genuine RED result of `13 failed, 30 passed`.
+The current verified snapshot is `97 passed` for the complete suite and `43 passed` for the
+focused RAG suite.
 
 ## Run the CLI demonstrations
 
@@ -122,6 +127,25 @@ python -m src.cli --question "What is retrieval augmented generation?"
 python -m src.cli --question "Who won the world cup in 1958?"
 python -m src.cli --corpus-profile training-rag --question "Why are citations important in RAG?"
 ```
+
+Current default supported output:
+
+```text
+Question:
+What is retrieval augmented generation?
+
+Answer:
+Grounded answer:
+- Retrieval augmented generation combines retrieval with text generation. The model should answer using retrieved evidence rather than unsupported assumptions. [doc-1-chunk-0] [doc-1-chunk-1]
+
+Corpus profile: default
+
+Refused: False
+Citations: doc-1-chunk-0, doc-1-chunk-1
+```
+
+The first citation is the qualifying lexical retrieval seed. The second is its verified immediate
+same-document source continuation; it is not assumed to be the next retrieval-ranked result.
 
 ## Corpus profiles
 
@@ -163,14 +187,15 @@ permission. A final Mateja review is not claimed. The demo lead remains to be ag
 
 - Lexical overlap is not semantic understanding, entailment, or external fact verification.
 - Conservative qualification can refuse valid one-keyword, synonym, acronym, or paraphrase queries.
-- A threshold-passing excerpt may still be incomplete; the supported default excerpt ends with
-  `rather` at its real chunk boundary.
+- Verified continuation requires original forward source order, matching document identity, and a
+  non-empty exact word overlap. Zero-overlap or unverifiable boundaries remain incomplete by design.
+- Sentence completion recognizes only trailing `.`, `?`, and `!`.
 - Exact extractive answers favor provenance over fluency.
 - Tokenization is ASCII-oriented and the corpus is small and static.
 
 ## Submission readiness
 
-Before packaging, rerun the full tests, focused RAG tests, both CLI commands, the comparison
+Before packaging, rerun the full tests, focused RAG tests, all three CLI commands, the comparison
 script, and `git diff --check`. Review `evidence.md` and the homework checklist. The technical
 materials are locally review-ready, but the demo lead and any external submission/publishing
 decision remain deliberately unresolved.

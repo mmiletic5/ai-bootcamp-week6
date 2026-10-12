@@ -3,6 +3,8 @@
 Verified locally on 2026-10-12 from `feature/isidora-week6` at pre-T010 HEAD
 `40fb6a8904f9ccd5241ee3fbf4cc276d12d6609a`. All scores below are produced by the
 deterministic lexical retriever; they do not establish semantic entailment or external factual truth.
+Feature 002 was later verified in the working tree at HEAD
+`4ca231a546592f3e7bba60e2c0f4f622379819aa`; its results are labeled separately below.
 
 ## 1. Outcome 1: Chunking impact
 
@@ -72,16 +74,18 @@ Exact answer:
 
 ```text
 Grounded answer:
-- Retrieval augmented generation combines retrieval with text generation. The model should answer using retrieved evidence rather than [doc-1-chunk-0]
+- Retrieval augmented generation combines retrieval with text generation. The model should answer using retrieved evidence rather than unsupported assumptions. [doc-1-chunk-0] [doc-1-chunk-1]
 ```
 
-Citation list: `doc-1-chunk-0`
+Citation list: `doc-1-chunk-0`, `doc-1-chunk-1`
 
 Refused: `False`
 
-The excerpt intentionally ends in `rather`: that is the verified chunk boundary. The answer is
-extractive and does not invent the remainder of the source sentence. The inline citation and
-citation list both identify the qualifying retrieved chunk; the weak second result is absent.
+`doc-1-chunk-0` remains the only qualifying lexical seed; the weak ranked result
+`doc-2-chunk-0` remains absent. The answer layer finds `doc-1-chunk-1` independently as the
+immediate same-document neighbor in original source order, verifies the exact boundary overlap,
+appends only `unsupported assumptions.`, and cites both contributing chunks. Retrieval ranking
+and source adjacency are not treated as the same order.
 
 ## 4. Outcome 4: Refusal behavior
 
@@ -119,7 +123,8 @@ Command:
 .\.venv\Scripts\python.exe -m src.cli --question "What is retrieval augmented generation?"
 ```
 
-Retrieved results: `doc-1-chunk-0` (0.294118), `doc-2-chunk-0` (0.052632). Only the first qualifies.
+Retrieved results: `doc-1-chunk-0` (0.294118), `doc-2-chunk-0` (0.052632). Only the first
+qualifies as the lexical seed. `doc-1-chunk-1` is a separately verified adjacent source continuation.
 
 ```text
 Question:
@@ -127,12 +132,12 @@ What is retrieval augmented generation?
 
 Answer:
 Grounded answer:
-- Retrieval augmented generation combines retrieval with text generation. The model should answer using retrieved evidence rather than [doc-1-chunk-0]
+- Retrieval augmented generation combines retrieval with text generation. The model should answer using retrieved evidence rather than unsupported assumptions. [doc-1-chunk-0] [doc-1-chunk-1]
 
 Corpus profile: default
 
 Refused: False
-Citations: doc-1-chunk-0
+Citations: doc-1-chunk-0, doc-1-chunk-1
 ```
 
 The command was run twice during final verification and produced identical output.
@@ -162,6 +167,8 @@ Citations: None
 
 ### Verification snapshot
 
+Historical pre-Feature-002 results are preserved:
+
 ```text
 .\.venv\Scripts\python.exe -m pytest -q
 83 passed in 0.12s
@@ -170,11 +177,26 @@ Citations: None
 29 passed in 0.06s
 ```
 
+Feature 002 TDD and final verification were observed separately:
+
+```text
+Q002 RED: 13 failed, 30 passed in 0.30s
+Q003 GREEN: 43 passed in 0.09s; 97 passed in 0.17s
+Q004 final: 43 passed in 0.16s; 97 passed in 0.28s
+Q005 documentation verification: 43 passed in 0.13s; 97 passed in 0.19s
+```
+
+The default supported and unsupported CLI commands produced identical output on repeated runs.
+The `training-rag` supported command completed its answer with citations
+`tr-doc-1-chunk-0`, `tr-doc-1-chunk-1`. Under `(80,20)`, the default answer required and cited
+`doc-1-chunk-0`, `doc-1-chunk-1`, and `doc-1-chunk-2`.
+
 ## Contributions
 
 - Mateja Miletic: Outcomes 1 and 2 (chunking, retrieval, tests, comparison script, and detailed evidence).
 - Isidora Prica: Outcomes 3 and 4 (grounded extractive answers, citations, refusal behavior, tests, and detailed evidence).
 - Isidora Prica: final technical integration and shared Outcome 5 evidence preparation, completed independently with Mateja's permission.
+- Isidora Prica: Feature 002 verified adjacent-source continuation, tests, and updated Outcome 3/5 evidence.
 
 No claim is made that Mateja reviewed or approved this final integrated document. The demo lead
 has not been agreed or recorded. No external submission, merge, rebase, push, or pull request was performed.
