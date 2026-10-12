@@ -2,7 +2,7 @@
 
 **Input**: `spec.md`, `plan.md`, and `research.md` in this feature directory
 **Workflow**: RED -> GREEN -> REFACTOR -> VERIFY -> EVIDENCE -> COMMIT
-**Authorization**: T001-T004 are complete. T005-T006 are authorized for Implementation Session 2;
+**Authorization**: T001-T006 are complete. Implementation Session 2 stops before T007;
 T007 and later tasks remain unauthorized in this session.
 
 ## Phase 1: Specification Setup and Mandatory Review Gate
@@ -106,7 +106,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **Complete when**: boundary and false-positive failures directly map to R4 requirements.
   - **Suggested future commit**: `test: specify unsupported question refusal`.
 
-- [ ] T006 [US2] Implement, refactor, and verify Outcome 4 in `src/rag.py`.
+- [x] T006 [US2] Implement, refactor, and verify Outcome 4 in `src/rag.py`.
   - **Requirements/acceptance**: R4.1-R4.5, NFR-001-NFR-003.
   - **Dependencies**: T005 with observed relevant RED failures.
   - **GREEN**: apply the exact stopword set, two-distinct-term minimum, and coverage `>= 0.50`;
@@ -115,6 +115,14 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **Verification**: `.\.venv\Scripts\python.exe -m pytest tests\test_rag.py -q`;
     `.\.venv\Scripts\python.exe -m pytest -q`; `git diff --check`.
   - **Expected GREEN**: all focused and full tests pass, including World Cup refusal.
+  - **Observed verification (2026-10-12)**: no implementation edit was necessary because the
+    shared T004 qualification helpers already satisfy R4.1-R4.5. Focused RAG tests reported
+    `24 passed in 0.05s`; the full suite reported `78 passed in 0.11s`; `git diff --check`
+    passed. Outcome 3 tests remain green, Mateja-owned tracked files have no diff from `a358b7f`,
+    and the preserved untracked handoff hash remains
+    `230543DC37628433F66F617B7CF4739DB8795C0E6F39C7AFC65BF678866508CB`.
+    The rule remains a lexical heuristic: overlap does not prove semantic entailment or factual
+    correctness.
   - **Evidence**: retain actual unsupported retrieval and refusal for T008.
   - **Complete when**: every insufficient path has no excerpt, claim, or citation.
   - **Suggested future commit**: `feat: reject insufficient RAG evidence`.
@@ -180,7 +188,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 `T001 -> APPROVAL -> T002 -> T003 -> T004 -> T005 -> T006 -> T007 -> T008 -> T009 -> T010`
 
-- T005-T006 are the only currently authorized tasks in Implementation Session 2.
+- T005-T006 are complete; this session stops before pending T007.
 - T003/T004 complete User Story 1 independently.
 - T005/T006 complete User Story 2 after the shared qualification contract exists.
 - T007/T008 complete User Story 3 after answer/refusal behavior is stable.
