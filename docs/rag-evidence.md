@@ -215,6 +215,7 @@ consumed continuations, both corpus profiles, refusal, and API compatibility.
 
 ## Integration status
 
-Feature 002 Q001-Q004 and the Q005 documentation verification are complete locally. No commit,
-push, merge, rebase, pull request, or external publication was performed. The demo lead and any
-external submission decision remain separate unresolved project decisions.
+Feature 002 Q001-Q005 are complete. [Pull request #1](https://github.com/mmiletic5/ai-bootcamp-week6/pull/1)
+was merged into `develop` at commit `112c919`. The integrated full test suite was independently
+verified on October 12, 2026 with `97 passed in 0.26s`. The GitHub repository link has not yet been
+submitted to the professor, and the demo lead remains unassigned.

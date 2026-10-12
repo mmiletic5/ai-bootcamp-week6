@@ -186,6 +186,14 @@ Q004 final: 43 passed in 0.16s; 97 passed in 0.28s
 Q005 documentation verification: 43 passed in 0.13s; 97 passed in 0.19s
 ```
 
+Final integrated `develop` verification was recorded separately after
+[pull request #1](https://github.com/mmiletic5/ai-bootcamp-week6/pull/1) was merged at commit
+`112c919`:
+
+```text
+October 12, 2026: 97 passed in 0.26s
+```
+
 The default supported and unsupported CLI commands produced identical output on repeated runs.
 The `training-rag` supported command completed its answer with citations
 `tr-doc-1-chunk-0`, `tr-doc-1-chunk-1`. Under `(80,20)`, the default answer required and cited
@@ -199,4 +207,5 @@ The `training-rag` supported command completed its answer with citations
 - Isidora Prica: Feature 002 verified adjacent-source continuation, tests, and updated Outcome 3/5 evidence.
 
 No claim is made that Mateja reviewed or approved this final integrated document. The demo lead
-has not been agreed or recorded. No external submission, merge, rebase, push, or pull request was performed.
+has not been agreed or recorded. Pull request #1 was merged into `develop` at commit `112c919`.
+The GitHub repository link has not yet been submitted to the professor.

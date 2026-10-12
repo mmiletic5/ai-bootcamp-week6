@@ -54,9 +54,11 @@ Use this checklist when preparing your submission.
 - [x] `evidence.md` with Outcome 1-5 sections.
 - [x] CLI commands used for both example queries.
 - [x] Historical `83`/`29` and current `97`/`43` test snapshots are labeled separately.
+- [x] Pull request #1 was merged into `develop` at commit `112c919`.
+- [x] The integrated full suite was independently verified on October 12, 2026: `97 passed in 0.26s`.
 
 ## J. Remaining decisions
 
 - [ ] Agree and record the designated demo lead.
-- [ ] Review the final local bundle and decide separately whether to publish, merge, or submit it externally.
+- [ ] Submit the GitHub repository link to the professor.
 
