@@ -174,13 +174,21 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 ## Phase 6: Cross-Cutting Verification
 
-- [ ] T009 Complete regression and integration-readiness review across `src/rag.py`, optional
+- [x] T009 Complete regression and integration-readiness review across `src/rag.py`, optional
   `src/cli.py`, `tests/test_rag.py`, `docs/rag-evidence.md`, and `docs/homework-checklist.md`.
   - **Requirements/acceptance**: SC-003-SC-005 and NFR-001-NFR-004.
   - **Dependencies**: T008.
   - **Verification**: focused RAG tests; full pytest; `git diff --check`; `git status --short`;
     scoped diff; handoff hash; confirm Mateja-owned source, tests, and evidence unchanged.
   - **Evidence**: record actual final counts and any authorized commit references.
+  - **Observed verification (2026-10-12)**: focused RAG tests reported `29 passed in 0.07s`;
+    the full suite reported `83 passed in 0.14s`; both approved CLI examples reproduced the
+    documented supported/refusal states; and `git diff --check` passed. Requirement-test-task-
+    evidence traceability was reviewed. Mateja-owned source, tests, evidence, and comparison
+    script have no diff from `f995412`; the preserved handoff SHA-256 remains
+    `230543DC37628433F66F617B7CF4739DB8795C0E6F39C7AFC65BF678866508CB`. No environment,
+    cache, or bytecode file is tracked. The only untracked file remains the preserved handoff.
+    T010 and every shared Outcome 5/submission item remain incomplete.
   - **Complete when**: tests, traceability, evidence, ownership, and diff hygiene all pass.
   - **Commit boundary**: only explicitly authorized corrections or logical phase commits.
 
@@ -203,8 +211,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 `T001 -> APPROVAL -> T002 -> T003 -> T004 -> T005 -> T006 -> T007 -> T008 -> T009 -> T010`
 
-- T007 is complete; T008-T009 are authorized for Implementation Session 3, which stops before
-  pending T010.
+- T007-T009 are complete; Implementation Session 3 stops before pending T010.
 - T003/T004 complete User Story 1 independently.
 - T005/T006 complete User Story 2 after the shared qualification contract exists.
 - T007/T008 complete User Story 3 after answer/refusal behavior is stable.
