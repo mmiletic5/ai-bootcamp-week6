@@ -1,20 +1,97 @@
 from dataclasses import fields
 from inspect import signature
+import sys
 
 import pytest
 
 from src.chunking import Chunk
 from src.chunking import build_chunks
+from src.cli import main
 from src.corpus import load_default_corpus
 from src.rag import REFUSAL_MESSAGE, RagAnswer, build_grounded_answer
 from src.retrieval import retrieve_top_k
 
 
 SUPPORTED_QUESTION = "What is retrieval augmented generation?"
+UNSUPPORTED_QUESTION = "Who won the world cup in 1958?"
 
 
 def make_chunk(chunk_id: str, text: str) -> Chunk:
     return Chunk(chunk_id=chunk_id, doc_id="doc", title="Title", text=text)
+
+
+def run_cli(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], *args: str) -> str:
+    monkeypatch.setattr(sys, "argv", ["src.cli", *args])
+    main()
+    return capsys.readouterr().out
+
+
+def test_cli_supported_question_has_separate_sections_and_valid_citation(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    output = run_cli(monkeypatch, capsys, "--question", SUPPORTED_QUESTION)
+
+    assert output == (
+        "Question:\n"
+        f"{SUPPORTED_QUESTION}\n\n"
+        "Answer:\n"
+        "Grounded answer:\n"
+        "- Retrieval augmented generation combines retrieval with text generation. "
+        "The model should answer using retrieved evidence rather than [doc-1-chunk-0]\n\n"
+        "Corpus profile: default\n\n"
+        "Refused: False\n"
+        "Citations: doc-1-chunk-0\n"
+    )
+
+
+def test_cli_unsupported_question_has_exact_safe_refusal(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    output = run_cli(monkeypatch, capsys, "--question", UNSUPPORTED_QUESTION)
+
+    assert output == (
+        "Question:\n"
+        f"{UNSUPPORTED_QUESTION}\n\n"
+        "Answer:\n"
+        f"{REFUSAL_MESSAGE}\n\n"
+        "Corpus profile: default\n\n"
+        "Refused: True\n"
+        "Citations: None\n"
+    )
+
+
+def test_cli_existing_explicit_arguments_remain_compatible(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    output = run_cli(
+        monkeypatch,
+        capsys,
+        "--question",
+        SUPPORTED_QUESTION,
+        "--chunk-size",
+        "140",
+        "--overlap",
+        "30",
+        "--top-k",
+        "2",
+        "--corpus-profile",
+        "default",
+    )
+
+    assert "Refused: False" in output
+    assert "Citations: doc-1-chunk-0" in output
+
+
+@pytest.mark.parametrize("question", [SUPPORTED_QUESTION, UNSUPPORTED_QUESTION])
+def test_cli_output_is_deterministic_for_repeated_inputs(
+    question: str,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    first = run_cli(monkeypatch, capsys, "--question", question)
+    second = run_cli(monkeypatch, capsys, "--question", question)
+
+    assert first == second
 
 
 def test_build_grounded_answer_returns_citations_for_supported_query() -> None:

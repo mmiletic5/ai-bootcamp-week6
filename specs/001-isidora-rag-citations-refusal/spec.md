@@ -2,7 +2,7 @@
 
 **Feature Branch**: `feature/isidora-week6`
 **Created**: 2026-10-11
-**Status**: Planning Review
+**Status**: Approved
 **Input**: Outcomes 3 and 4 of the SITA Week 6 RAG homework: return grounded answers
 with explicit chunk citations and refuse questions when evidence is insufficient.
 

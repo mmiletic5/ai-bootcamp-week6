@@ -2,8 +2,8 @@
 
 **Input**: `spec.md`, `plan.md`, and `research.md` in this feature directory
 **Workflow**: RED -> GREEN -> REFACTOR -> VERIFY -> EVIDENCE -> COMMIT
-**Authorization**: T001-T006 are complete. Implementation Session 2 stops before T007;
-T007 and later tasks remain unauthorized in this session.
+**Authorization**: T001-T006 are complete. Implementation Session 3 authorizes T007-T009
+only and must stop before T010. T010 remains pending a separate new session.
 
 ## Phase 1: Specification Setup and Mandatory Review Gate
 
@@ -103,12 +103,14 @@ or Git history until Isidora explicitly approves the actual artifacts.
     duplicate query terms, exact safe refusal output, invalid `top_k`, and supported regression.
     No RED failure was manufactured and no application change was needed.
   - **Evidence**: capture relevant failures only.
-  - **Complete when**: boundary and false-positive failures directly map to R4 requirements.
+  - **Complete when**: boundary and false-positive tests directly map to R4 requirements and
+    either expose approved gaps or verify behavior already implemented by the shared T004 gate.
   - **Suggested future commit**: `test: specify unsupported question refusal`.
 
 - [x] T006 [US2] Implement, refactor, and verify Outcome 4 in `src/rag.py`.
   - **Requirements/acceptance**: R4.1-R4.5, NFR-001-NFR-003.
-  - **Dependencies**: T005 with observed relevant RED failures.
+  - **Dependencies**: T005 with observed relevant RED failures, or documented immediate passes
+    showing that T004 already implemented the shared behavior without manufactured failures.
   - **GREEN**: apply the exact stopword set, two-distinct-term minimum, and coverage `>= 0.50`;
     return only the existing exact refusal when no chunk qualifies; preserve retrieval errors.
   - **REFACTOR**: share qualification logic with Outcome 3 and keep helpers private.
@@ -131,7 +133,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 **Independent test**: supported and unsupported CLI results match automated behavior.
 
-- [ ] T007 [US3] Test and minimally correct CLI integration in `tests/test_rag.py` and, only if
+- [x] T007 [US3] Test and minimally correct CLI integration in `tests/test_rag.py` and, only if
   demonstrated necessary, `src/cli.py`.
   - **Requirements/acceptance**: R3.3/AC3.3 and R5.1/AC5.1.
   - **Dependencies**: T006.
@@ -142,6 +144,13 @@ or Git history until Isidora explicitly approves the actual artifacts.
     `.\.venv\Scripts\python.exe -m src.cli --question "What is retrieval augmented generation?"`;
     `.\.venv\Scripts\python.exe -m src.cli --question "Who won the world cup in 1958?"`.
   - **Evidence**: capture exact CLI outputs.
+  - **Observed verification (2026-10-12)**: five added CLI cases (four test functions, including
+    two deterministic-input parameters) passed on their first run; focused RAG tests reported
+    `29 passed in 0.16s`. Both approved CLI commands produced separate Question, Answer, Corpus
+    profile, Refused, and Citations sections. The supported case cited only `doc-1-chunk-0`;
+    the unsupported case printed the exact refusal, `Refused: True`, and `Citations: None`.
+    Existing defaults and explicit arguments remained compatible. No CLI defect was found, so
+    `src/cli.py` was not changed and no RED failure was manufactured.
   - **Complete when**: Answer, Refused, and Citations are deterministic and clearly separated.
   - **Suggested future commit**: `test: verify RAG CLI output`, plus a feature commit only if needed.
 
@@ -188,7 +197,8 @@ or Git history until Isidora explicitly approves the actual artifacts.
 
 `T001 -> APPROVAL -> T002 -> T003 -> T004 -> T005 -> T006 -> T007 -> T008 -> T009 -> T010`
 
-- T005-T006 are complete; this session stops before pending T007.
+- T007 is complete; T008-T009 are authorized for Implementation Session 3, which stops before
+  pending T010.
 - T003/T004 complete User Story 1 independently.
 - T005/T006 complete User Story 2 after the shared qualification contract exists.
 - T007/T008 complete User Story 3 after answer/refusal behavior is stable.
