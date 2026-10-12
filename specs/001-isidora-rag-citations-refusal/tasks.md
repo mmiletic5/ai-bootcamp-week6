@@ -41,6 +41,8 @@ or Git history until Isidora explicitly approves the actual artifacts.
     `.\.venv\Scripts\python.exe -m pytest -q`.
   - **Expected**: Mateja commits present and the pre-implementation suite reports 56 passing tests;
     any discrepancy stops execution.
+  - **Observed baseline (2026-10-12)**: branch `feature/isidora-week6`, HEAD `f995412` before
+    planning commits, handoff hash unchanged, and `56 passed in 0.12s`.
   - **Evidence**: retain actual output for later documentation.
   - **Complete when**: baseline and ownership boundaries are reconfirmed.
   - **Commit boundary**: none.
@@ -65,7 +67,7 @@ or Git history until Isidora explicitly approves the actual artifacts.
   - **Complete when**: failures demonstrate approved gaps rather than test mistakes.
   - **Suggested future commit**: `test: specify grounded answer and citation behavior`.
 
-- [ ] T004 [US1] Implement, refactor, and verify Outcome 3 in `src/rag.py`.
+- [x] T004 [US1] Implement, refactor, and verify Outcome 3 in `src/rag.py`.
   - **Requirements/acceptance**: R3.1-R3.4, NFR-001-NFR-003.
   - **Dependencies**: T003 with observed relevant RED failures.
   - **GREEN**: add private meaningful-term and per-result qualification helpers; retrieve once;
@@ -76,6 +78,8 @@ or Git history until Isidora explicitly approves the actual artifacts.
     `.\.venv\Scripts\python.exe -m pytest tests\test_retrieval.py tests\test_chunking.py -q`;
     `git diff --check`.
   - **Expected GREEN**: all Outcome 3 and Mateja regression tests pass.
+  - **Observed GREEN (2026-10-12)**: RAG `8 passed in 0.04s`; retrieval/chunking
+    `51 passed in 0.07s`; full suite `62 passed in 0.09s`; `git diff --check` passed.
   - **Evidence**: retain the actual supported result for T008.
   - **Complete when**: only qualifying retrieved text and IDs appear and Mateja files are unchanged.
   - **Suggested future commit**: `feat: enforce grounded extractive answers and citations`.
